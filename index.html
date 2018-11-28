@@ -9,17 +9,64 @@
 
 <body>
     <div>
-        <p>Press r, p, or s to start the game...</p> <!--NEEDS TO DISSAPEAR-->
-        <p></p> <!--USER CHOICE-->
-        <p></p> <!---COMPUTER CHOICE-->
-        <p></p> <!--WINS-->
-        <p></p> <!---LOSSES-->
-        <p></p> <!--TIES-->
+        <p id="directionText">Press r, p, or s to start the game...</p>
+        <p id="userChoice-text"></p>
+        <p id="compChoice-text"></p>
+        <p id="wins-text"></p>
+        <p id="losses-text"></p>
+        <p id="ties-text"></p>
     </div>
 
     <script type="text/javascript">
     // Array
-    
+    var compChoice = ["r", "p", "s"];
+
+    // Set initial point values
+    var wins = 0;
+    var losses = 0;
+    var ties = 0;
+
+    // Scoreboard Elements
+    var directionText = document.getElementById("directionText");
+    var userChoiceText = document.getElementById("userChoice-text");
+    var compChoiceText = document.getElementById("compChoice-text");
+    var winsText = document.getElementById("wins-text");
+    var lossesText = document.getElementById("losses-text");
+    var tiesText = document.getElementById("ties-text");
+
+    // Run after user presses key
+    document.onkeyup = function(event) {
+        
+        // Which key was pressed
+        var userGuess = event.key;
+
+        // Random computer choice
+        var compGuess = compChoice[Math.floor(Math.random() * compChoice.length)];
+
+        // Do you win, lose, or draw?
+        if ((userGuess === "r") || (userGuess === "p") || (userGuess === "s")) {
+            
+            if ((userGuess === "r" && compGuess === "s") ||
+                (userGuess === "p" && compGuess === "r") ||
+                (userGuess === "s" && compGuess === "p")) {
+                    wins++;
+                } else if (userGuess === compGuess) {
+                    ties++;
+                } else {
+                    losses++;
+                }
+        // Hide Directions
+        directionText.textContent = "";
+
+        // Scoreboard Display
+        userChoiceText.textContent = "You chose: " + userGuess;
+        compChoiceText.textContent = "WOPR chose: " + compGuess;
+        winsText.textContent = "Wins: " + wins;
+        lossesText.textContent = "Losses: " + losses;
+        tiesText.textContent = "Ties: " + ties;
+
+        }
+    };
 
     </script>
 </body>
